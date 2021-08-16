@@ -29,5 +29,6 @@ export const typeDefs = gql`
       password: String!
       confirmPassword: String!
     ): User!
+    login(username: String!, password: String!): User!
   }
 `;

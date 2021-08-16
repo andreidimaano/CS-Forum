@@ -3,7 +3,10 @@ import jwt from "jsonwebtoken";
 import { secret } from "../constants";
 import User from "../models/User";
 import { UserInputError } from "apollo-server-express";
-import { validateRegisterInput } from "../../utils/validators";
+import {
+  validateRegisterInput,
+  validateLoginInput,
+} from "../../utils/validators";
 
 export const UserResolvers = {
   Query: {
@@ -66,6 +69,43 @@ export const UserResolvers = {
       return {
         ...res._doc,
         id: res.id,
+        token,
+      };
+    },
+    login: async (_, { username, password }) => {
+      // Validate user input
+      const { errors, valid } = validateLoginInput(username, password);
+      if (!valid) {
+        throw new UserInputError("Errors", { errors });
+      }
+
+      // Check if username exists
+      const user = await User.findOne({ username });
+      if (!user) {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", { errors });
+      }
+
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
+        errors.general = "Wrong credentials";
+        throw new UserInputError("Wrong credentials", { errors });
+      }
+
+      // Authentication token
+      const token = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+        },
+        secret,
+        { expiresIn: "1h" }
+      );
+
+      return {
+        ...user._doc,
+        id: user.id,
         token,
       };
     },
