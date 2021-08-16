@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { secret } from "../constants";
 import User from "../models/User";
+import { UserInputError } from "apollo-server-express";
+import { validateRegisterInput } from "../../utils/validators";
 
 export const UserResolvers = {
   Query: {
@@ -15,18 +17,39 @@ export const UserResolvers = {
     },
   },
   Mutation: {
-    createUser: async (_, { username, email, password }) => {
+    createUser: async (_, { username, email, password, confirmPassword }) => {
+      // Validate user input
+      const { valid, errors } = validateRegisterInput(
+        username,
+        email,
+        password,
+        confirmPassword
+      );
+      if (!valid) {
+        throw new UserInputError("Errors", { errors });
+      }
+
+      // Check if user already exists or not
+      const user = await User.findOne({ username });
+      if (user) {
+        throw new UserInputError("Username is already taken", {
+          errors: {
+            username: "This username is taken",
+          },
+        });
+      }
+
       // Encrypt the password
       password = await bcrypt.hash(password, 12);
 
-      const user = new User({
+      const newUser = new User({
         username,
         email,
         password,
         createdAt: new Date(),
       });
 
-      const res = await user.save();
+      const res = await newUser.save();
 
       // Authentication token
       const token = jwt.sign(
@@ -38,7 +61,7 @@ export const UserResolvers = {
         secret,
         { expiresIn: "1h" }
       );
-      console.log(user);
+      console.log(newUser);
 
       return {
         ...res._doc,

@@ -23,6 +23,11 @@ export const typeDefs = gql`
 
   type Mutation {
     createTest(name: String!): Test!
-    createUser(username: String!, email: String!, password: String!): User!
+    createUser(
+      username: String!
+      email: String!
+      password: String!
+      confirmPassword: String!
+    ): User!
   }
 `;
