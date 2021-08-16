@@ -4,13 +4,14 @@ import { typeDefs } from "./typedefs";
 import { TestResolvers } from "./resolvers/TestResolver";
 import mongoose from "mongoose";
 import { mongoUrl } from "./constants";
+import { UserResolvers } from "./resolvers/UserResolver";
 
 const startServer = async () => {
   const app = express();
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers: [TestResolvers],
+    resolvers: [TestResolvers, UserResolvers],
   });
 
   server.applyMiddleware({ app });
