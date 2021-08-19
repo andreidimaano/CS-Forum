@@ -3,7 +3,6 @@ import express from "express";
 import mongoose from "mongoose";
 
 import { typeDefs } from "./typedefs";
-import { TestResolvers } from "./resolvers/TestResolver";
 import { mongoUrl } from "./constants";
 import { UserResolvers } from "./resolvers/UserResolver";
 import { PostResolvers } from "./resolvers/PostResolver";
@@ -13,7 +12,7 @@ const startServer = async () => {
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers: [TestResolvers, UserResolvers, PostResolvers],
+    resolvers: [UserResolvers, PostResolvers],
     context: ({ req }) => ({ req }),
   });
 
