@@ -5,6 +5,8 @@ export const typeDefs = gql`
     hello: String!
     tests: [Test!]!
     getUsers: [User]
+    getPosts: [Post]
+    getPost(postId: ID!): Post
   }
 
   type Test {
@@ -21,6 +23,13 @@ export const typeDefs = gql`
     createdAt: String!
   }
 
+  type Post {
+    id: ID!
+    username: String!
+    body: String!
+    createdAt: String!
+  }
+
   type Mutation {
     createTest(name: String!): Test!
     createUser(
@@ -30,5 +39,7 @@ export const typeDefs = gql`
       confirmPassword: String!
     ): User!
     login(username: String!, password: String!): User!
+    createPost(body: String!): Post!
+    deletePost(postId: ID!): String!
   }
 `;
