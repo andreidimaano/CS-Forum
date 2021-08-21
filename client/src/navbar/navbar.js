@@ -14,6 +14,8 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  createIcon,
+  Image
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -41,11 +43,11 @@ const NavbarSignUp = () => {
         ml={"auto"}
         mr={"auto"}
         maxW={"1280px"}
+        justify={{base: 'space-between'}}
       >
         <Flex
-          flex={{ base: "1", md: "auto" }}
+          flex={{md: "auto" }}
           ml={{ base: -2 }}
-          mr={{ base: "auto"}}
           display={{ base: "flex", md: "none" }}
         >
           <IconButton
@@ -57,22 +59,25 @@ const NavbarSignUp = () => {
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex alignSelf={{base: "center"}} align={"center"} justify={{ base: "center" }}>
+        <Flex align={"center"}>
+          <Image mr={2}boxSize="40px" src="./nodes.svg" alt="nodes" />
           <Text
-            textAlign={useBreakpointValue({ base: "center", md: "left" })}
-            fontFamily={"heading"}
-            color={useColorModeValue("gray.800", "white")}
-            fontSize="xl"
-          >
-            CS Forum
+              textAlign={useBreakpointValue({ base: "center", md: "left" })}
+              fontFamily={"heading"}
+              color={useColorModeValue("gray.800", "white")}
+              fontSize="2xl"
+            >
+              Kruskl
           </Text>
         </Flex>
-        <Flex flex={"auto"} align={"center"} justify={"space-between"}>
-          <Flex py={"16px"} display={{ base: "none", md: "flex" }} ml={10}>
-            Posts
-          </Flex>
+        
+        <Flex py={"16px"} display={{ base: "none", md: "flex" }} fontSize={"md"} mr={12} >
+          Posts
+        </Flex>
+        <Flex align={"center"}>
+          
           <Stack
-            flex={{ base: 1, md: 0 }}
+            // flex={{ base: 1, md: 0 }}
             justify={"flex-end"}
             align={"center"}
             direction={"row"}
@@ -80,7 +85,7 @@ const NavbarSignUp = () => {
           >
             <Button
               as={"a"}
-              fontSize={"sm"}
+              fontSize={"md"}
               fontWeight={400}
               variant={"link"}
               href={"#"}
@@ -91,12 +96,16 @@ const NavbarSignUp = () => {
               display={{ base: "none", md: "inline-flex" }}
               fontSize={"sm"}
               fontWeight={600}
-              color={"white"}
-              bg={"pink.400"}
+              color={useColorModeValue("white", "#2E58FF")}
+              bg={"transparent"}
               href={"#"}
               _hover={{
-                bg: "pink.300",
+                bg: "#2E58FF",
+                color: useColorModeValue("#2E58FF","white")
               }}
+              border={2}
+              borderStyle={"solid"}
+              borderColor={useColorModeValue("white", "#2E58FF")}
             >
               Create Account
             </Button>
