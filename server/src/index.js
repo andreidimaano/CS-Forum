@@ -6,13 +6,15 @@ import { typeDefs } from "./typedefs";
 import { mongoUrl } from "./constants";
 import { UserResolvers } from "./resolvers/UserResolver";
 import { PostResolvers } from "./resolvers/PostResolver";
+import { CommentResolvers } from "./resolvers/CommentResolver";
+import { LikeResolvers } from "./resolvers/LikeResolver";
 
 const startServer = async () => {
   const app = express();
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers: [UserResolvers, PostResolvers],
+    resolvers: [UserResolvers, PostResolvers, CommentResolvers, LikeResolvers],
     context: ({ req }) => ({ req }),
   });
 

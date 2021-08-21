@@ -8,7 +8,7 @@ export const PostResolvers = {
       try {
         const posts = await Post.find().sort({ createdAt: -1 });
         return posts;
-      } catch {
+      } catch (err) {
         throw new Error(err);
       }
     },
@@ -45,6 +45,7 @@ export const PostResolvers = {
         if (!post) {
           throw new Error("Post not found");
         }
+        // Check that this user is the one that created the post to delete it
         if (user.username === post.username) {
           await post.delete();
           return "Post successfully deleted";
