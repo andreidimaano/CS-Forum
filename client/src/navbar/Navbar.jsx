@@ -1,35 +1,24 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
-  Box,
-  Button,
-  Flex,
-  Avatar,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  HStack,
+  Box, Flex, HStack,
   IconButton,
-  Image,
-  Stack,
-  Link,
+  Image, Link,
   Text,
   useBreakpointValue,
   useColorModeValue,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { Link as ReactLink } from "react-router-dom";
+import Account from "./Account";
 import NavbarLink from "./NavbarLink";
 import SignUpButtons from "./SignUpButtons";
-import Account from "./Account";
-import { useState } from "react";
 
 const Links = ["Feed", "Explore Topics", "Your Threads"];
 
 const NavbarSignUp = () => {
   const { isOpen, onToggle } = useDisclosure();
-  const [isLoggedIn, setIsLoggedin] = useState(false);
+  const [isLoggedIn, setIsLoggedin] = useState(true);
 
   return (
     <Box

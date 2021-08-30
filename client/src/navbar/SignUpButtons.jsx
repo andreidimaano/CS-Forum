@@ -1,5 +1,4 @@
-import { Button, Flex, Stack, useColorModeValue } from "@chakra-ui/react";
-import { Link } from "@chakra-ui/react";
+import { Button, Flex, Link, Stack, useColorModeValue } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 
 const SignUpButtons = () => {
