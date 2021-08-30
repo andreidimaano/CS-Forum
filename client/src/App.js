@@ -3,24 +3,52 @@ import {
   ChakraProvider,
   Box,
   Text,
-  Link,
   VStack,
   Code,
   Grid,
   theme,
 } from "@chakra-ui/react";
 import { Logo } from "./Logo";
-import NavbarSignUp from "./navbar/navbar";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useRouteMatch,
+  useParams,
+} from "react-router-dom";
+import NavbarSignUp from "./navbar/Navbar";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box height="100vh">
-        <NavbarSignUp />
-        <ColorModeSwitcher pos="absolute" bottom="8" right="8" />
-        <div>Icons made by <a href="https://www.flaticon.com/authors/vitaly-gorbachev" title="Vitaly Gorbachev">Vitaly Gorbachev</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-      </Box>
+      <Router>
+        <Box height="100vh">
+          <NavbarSignUp />
+          <ColorModeSwitcher pos="absolute" bottom="8" right="8" />
+          <Switch>
+            <Route path="/feed"></Route>
+            <Route path="/explore"></Route>
+            <Route path="/threads"></Route>
+            <Route path="/login"></Route>
+            <Route path="/signup"></Route>
+            <Route path="/profile"></Route>
+          </Switch>
+          <div>
+            Icons made by{" "}
+            <a
+              href="https://www.flaticon.com/authors/vitaly-gorbachev"
+              title="Vitaly Gorbachev"
+            >
+              Vitaly Gorbachev
+            </a>{" "}
+            from{" "}
+            <a href="https://www.flaticon.com/" title="Flaticon">
+              www.flaticon.com
+            </a>
+          </div>
+        </Box>
+      </Router>
     </ChakraProvider>
   );
 }
