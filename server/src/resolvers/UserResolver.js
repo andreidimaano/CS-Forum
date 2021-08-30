@@ -14,7 +14,7 @@ export const UserResolvers = {
       try {
         const users = await User.find();
         return users;
-      } catch {
+      } catch (err) {
         throw new Error(err);
       }
     },

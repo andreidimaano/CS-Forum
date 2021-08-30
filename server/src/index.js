@@ -1,17 +1,21 @@
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
-import { typeDefs } from "./typedefs";
-import { TestResolvers } from "./resolvers/TestResolver";
 import mongoose from "mongoose";
+
+import { typeDefs } from "./typedefs";
 import { mongoUrl } from "./constants";
 import { UserResolvers } from "./resolvers/UserResolver";
+import { PostResolvers } from "./resolvers/PostResolver";
+import { CommentResolvers } from "./resolvers/CommentResolver";
+import { LikeResolvers } from "./resolvers/LikeResolver";
 
 const startServer = async () => {
   const app = express();
 
   const server = new ApolloServer({
     typeDefs,
-    resolvers: [TestResolvers, UserResolvers],
+    resolvers: [UserResolvers, PostResolvers, CommentResolvers, LikeResolvers],
+    context: ({ req }) => ({ req }),
   });
 
   server.applyMiddleware({ app });
