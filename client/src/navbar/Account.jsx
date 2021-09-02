@@ -38,7 +38,15 @@ const Account = () => {
             <MenuItem>Your Profile</MenuItem>
           </Link>
           <MenuDivider />
-          <MenuItem>Sign out</MenuItem>
+          <Link
+            as={ReactLink}
+            to={`/signout`}
+            _hover={{
+              textDecoration: "none",
+            }}
+          >
+            <MenuItem>Sign out</MenuItem>
+          </Link>
         </MenuList>
       </Menu>
     </Flex>

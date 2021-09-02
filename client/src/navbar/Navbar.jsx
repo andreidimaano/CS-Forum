@@ -1,6 +1,7 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box, Flex, HStack,
+  Collapse, Stack,
   IconButton,
   Image, Link,
   Text,
@@ -78,6 +79,15 @@ const NavbarSignUp = () => {
         </HStack>
         {isLoggedIn ? <Account /> : <SignUpButtons />}
       </Flex>
+
+      {isOpen? (
+        <Box p={4} display={{ md: 'none' }}>
+          <Stack as={'nav'} spacing={4}>
+            <NavbarLink route={"feed"} display={"Feed"} />
+            <NavbarLink route={"explore"} display={"Explore Topics"} />
+          </Stack>
+        </Box>
+      ): null}
     </Box>
   );
 };
