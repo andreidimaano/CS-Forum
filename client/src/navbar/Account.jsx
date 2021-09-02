@@ -1,11 +1,13 @@
 import {
   Avatar,
   Button,
-  Flex, Link, Menu,
+  Flex,
+  Link,
+  Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
-  MenuList
+  MenuList,
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 

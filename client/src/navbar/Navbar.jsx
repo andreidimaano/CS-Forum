@@ -1,17 +1,22 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
-  Box, Flex, HStack,
-  Collapse, Stack,
+  Box,
+  Flex,
+  HStack,
+  Collapse,
+  Stack,
   IconButton,
-  Image, Link,
+  Image,
+  Link,
   Text,
   useBreakpointValue,
   useColorModeValue,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Link as ReactLink } from "react-router-dom";
 import Account from "./Account";
+import MobileNav from "./MobileNav";
 import NavbarLink from "./NavbarLink";
 import SignUpButtons from "./SignUpButtons";
 
@@ -26,7 +31,7 @@ const NavbarSignUp = () => {
       borderBottom={1}
       borderStyle={"solid"}
       py={"8px"}
-      borderColor={useColorModeValue("gray.200", "gray.900")}
+      borderColor={useColorModeValue("gray.200", "gray.600")}
     >
       <Flex
         bg={useColorModeValue("white", "gray.800")}
@@ -80,14 +85,7 @@ const NavbarSignUp = () => {
         {isLoggedIn ? <Account /> : <SignUpButtons />}
       </Flex>
 
-      {isOpen? (
-        <Box p={4} display={{ md: 'none' }}>
-          <Stack as={'nav'} spacing={4}>
-            <NavbarLink route={"feed"} display={"Feed"} />
-            <NavbarLink route={"explore"} display={"Explore Topics"} />
-          </Stack>
-        </Box>
-      ): null}
+      {isOpen ? <MobileNav /> : null}
     </Box>
   );
 };
