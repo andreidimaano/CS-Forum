@@ -7,6 +7,12 @@ const userSchema = new Schema({
   password: String,
   email: String,
   createdAt: String,
+  likedPosts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "posts",
+    },
+  ],
 });
 
 export default model("User", userSchema);
