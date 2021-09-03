@@ -28,15 +28,18 @@ export const typeDefs = gql`
     username: String!
     body: String!
     createdAt: String!
-    comments: [Comment]!
+    comments: [ID]!
     likes: [Like]!
   }
 
   type Comment {
     id: ID!
-    createdAt: String!
     username: String!
     body: String!
+    createdAt: String!
+    comments: [Comment]!
+    likes: [Like]!
+    rootPost: ID!
   }
 
   type Like {
@@ -56,8 +59,8 @@ export const typeDefs = gql`
     login(username: String!, password: String!): User!
     createPost(body: String!): Post!
     deletePost(postId: ID!): String!
-    createComment(postId: ID!, body: String!): Post!
-    deleteComment(postId: ID!, commentId: ID!): Post!
+    createComment(commentParentId: ID, postParentId: ID, rootPostId: ID!, body: String!): Post!
+    deleteComment(commentParentId: ID, postParentId: ID, commentId: ID!): Post!
     likePost(postId: ID!): Post!
   }
 `;
