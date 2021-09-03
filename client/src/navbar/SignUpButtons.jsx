@@ -23,10 +23,7 @@ const SignUpButtons = () => {
         >
           Sign In
         </Link>
-        <Link
-          as={ReactLink}
-          to={`/signup`}
-        >
+        <Link as={ReactLink} to={`/signup`}>
           <Button
             display={{ base: "none", md: "inline-flex" }}
             fontSize={"sm"}

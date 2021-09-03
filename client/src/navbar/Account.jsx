@@ -1,11 +1,13 @@
 import {
   Avatar,
   Button,
-  Flex, Link, Menu,
+  Flex,
+  Link,
+  Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
-  MenuList
+  MenuList,
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 
@@ -38,7 +40,15 @@ const Account = () => {
             <MenuItem>Your Profile</MenuItem>
           </Link>
           <MenuDivider />
-          <MenuItem>Sign out</MenuItem>
+          <Link
+            as={ReactLink}
+            to={`/signout`}
+            _hover={{
+              textDecoration: "none",
+            }}
+          >
+            <MenuItem>Sign out</MenuItem>
+          </Link>
         </MenuList>
       </Menu>
     </Flex>
