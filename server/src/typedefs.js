@@ -21,6 +21,7 @@ export const typeDefs = gql`
     token: String!
     email: String!
     createdAt: String!
+    likedPosts: [ID!]
   }
 
   type Post {
