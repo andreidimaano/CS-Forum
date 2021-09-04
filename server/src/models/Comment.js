@@ -2,10 +2,14 @@ import mongoose from "mongoose";
 
 const { model, Schema } = mongoose;
 
-const postSchema = new Schema({
+const commentSchema = new Schema({
   username: String,
   createdAt: String,
   body: String,
+  rootPost: {
+      type: Schema.Types.ObjectId,
+      ref: "posts"
+  },
   comments: [
     {
       type: Schema.Types.ObjectId,
@@ -24,4 +28,4 @@ const postSchema = new Schema({
   },
 });
 
-export default model("Post", postSchema);
+export default model("Comment", commentSchema);
