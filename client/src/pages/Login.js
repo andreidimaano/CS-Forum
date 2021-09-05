@@ -3,18 +3,33 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { Link as ReactLink } from "react-router-dom";
 import { InputField } from "../utils/InputField";
+import { useMutation } from "@apollo/client";
+import { gql } from "graphql-tag";
 
 function Login() {
+  const [loginUser] = useMutation(LOGIN_USER, {
+    errorPolicy: "all",
+  });
+
   return (
     <Box mt={8} mx="auto" maxW="700px" w="100%">
       <Formik
         initialValues={{ username: "", password: "" }}
-        onSubmit={(values, { setErrors }) => {
-          // call login and set errors if there are errors or not (values.username, values.password)
-          console.log(values);
-          setErrors({
-            username: "error",
+        onSubmit={async (values, { setErrors }) => {
+          // Try to login the user using graphQL mutation
+          const response = await loginUser({
+            variables: {
+              username: values.username,
+              password: values.password,
+            },
           });
+
+          // Set the errors if there are any
+          if (response.errors) {
+            if (response.errors[0].extensions.errors) {
+              setErrors(response.errors[0].extensions.errors);
+            }
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -51,5 +66,18 @@ function Login() {
     </Box>
   );
 }
+
+const LOGIN_USER = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      id
+      email
+      username
+      createdAt
+      token
+      likedPosts
+    }
+  }
+`;
 
 export default Login;

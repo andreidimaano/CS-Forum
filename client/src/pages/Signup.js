@@ -3,8 +3,13 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { Link as ReactLink } from "react-router-dom";
 import { InputField } from "../utils/InputField";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/client";
 
 function Signup() {
+  const [createUser] = useMutation(CREATE_USER, {
+    errorPolicy: "all",
+  });
   return (
     <Box mt={8} mx="auto" maxW="700px" w="100%">
       <Formik
@@ -14,14 +19,29 @@ function Signup() {
           password: "",
           confirmPassword: "",
         }}
-        onSubmit={(values, { setErrors }) => {
-          // call login and set errors if there are errors or not (values.username, values.password)
-          console.log(values);
+        onSubmit={async (values, { setErrors }) => {
+          // Try to create a user using the createUser mutation
+          const response = await createUser({
+            variables: {
+              username: values.username,
+              email: values.email,
+              password: values.password,
+              confirmPassword: values.confirmPassword,
+            },
+          });
+
+          console.log(response);
+          // Set the errors if there are any
+          if (response.errors) {
+            if (response.errors[0].extensions.errors) {
+              setErrors(response.errors[0].extensions.errors);
+            }
+          }
         }}
       >
         {({ isSubmitting }) => (
           <Form>
-            <Center mb={4}>Login</Center>
+            <Center mb={4}>Sign up</Center>
             <Box>
               <InputField
                 name="username"
@@ -55,12 +75,12 @@ function Signup() {
             </Box>
             <Center>
               <Button mt={4} type="submit" isLoading={isSubmitting}>
-                Login
+                Sign up
               </Button>
             </Center>
             <Center mt={4}>
-              <Link as={ReactLink} to={`/signup`}>
-                Don't already have an account? Sign up
+              <Link as={ReactLink} to={`/login`}>
+                Already have an account? Log in
               </Link>
             </Center>
           </Form>
@@ -69,5 +89,28 @@ function Signup() {
     </Box>
   );
 }
+
+const CREATE_USER = gql`
+  mutation createUser(
+    $username: String!
+    $email: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    createUser(
+      username: $username
+      email: $email
+      password: $password
+      confirmPassword: $confirmPassword
+    ) {
+      id
+      username
+      token
+      email
+      createdAt
+      likedPosts
+    }
+  }
+`;
 
 export default Signup;
