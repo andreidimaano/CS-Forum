@@ -18,6 +18,8 @@ import {
 } from "react-router-dom";
 import NavbarSignUp from "./navbar/Navbar";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -30,8 +32,8 @@ function App() {
             <Route path="/feed"></Route>
             <Route path="/explore"></Route>
             <Route path="/threads"></Route>
-            <Route path="/login"></Route>
-            <Route path="/signup"></Route>
+            <Route path="/login" component={Login}></Route>
+            <Route path="/signup" component={Signup}></Route>
             <Route path="/profile"></Route>
           </Switch>
           <div>
