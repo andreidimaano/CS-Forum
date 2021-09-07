@@ -8,7 +8,6 @@ import {
   Grid,
   theme,
 } from "@chakra-ui/react";
-import { Logo } from "./Logo";
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,7 +16,7 @@ import {
   useParams,
 } from "react-router-dom";
 import NavbarSignUp from "./navbar/Navbar";
-import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import Feed from "./home/feed";
 
 function App() {
   return (
@@ -25,9 +24,9 @@ function App() {
       <Router>
         <Box height="100vh">
           <NavbarSignUp />
-          <ColorModeSwitcher pos="absolute" bottom="8" right="8" />
           <Switch>
-            <Route path="/feed"></Route>
+            <Route path="/"><Feed/></Route>
+            <Route path="/feed"><Feed/></Route>
             <Route path="/explore"></Route>
             <Route path="/threads"></Route>
             <Route path="/login"></Route>
