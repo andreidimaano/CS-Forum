@@ -1,12 +1,14 @@
 import { Center, Box, Button, Link } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import { Link as ReactLink } from "react-router-dom";
 import { InputField } from "../utils/InputField";
 import { useMutation } from "@apollo/client";
 import { gql } from "graphql-tag";
+import { AuthContext } from "../context/auth";
 
-function Login() {
+function Login(props) {
+  const context = useContext(AuthContext);
   const [loginUser] = useMutation(LOGIN_USER, {
     errorPolicy: "all",
   });
@@ -24,11 +26,16 @@ function Login() {
             },
           });
 
+          console.log(response);
           // Set the errors if there are any
           if (response.errors) {
             if (response.errors[0].extensions.errors) {
               setErrors(response.errors[0].extensions.errors);
             }
+          } else {
+            // Set the authentication cookie
+            context.login(response.data.login);
+            props.history.push("/");
           }
         }}
       >

@@ -11,10 +11,11 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
-
-
+import { AuthContext } from "../context/auth";
+import { useContext } from "react";
 
 const Account = () => {
+  const { logout } = useContext(AuthContext);
   return (
     <Flex alignItems={"center"}>
       <Menu>
@@ -42,11 +43,11 @@ const Account = () => {
           >
             <MenuItem>Your Profile</MenuItem>
           </Link>
-          <ColorModeSwitcher p={0}/>
+          <ColorModeSwitcher p={0} />
           <MenuDivider />
           <Link
             as={ReactLink}
-            to={`/signout`}
+            onClick={logout}
             _hover={{
               textDecoration: "none",
             }}

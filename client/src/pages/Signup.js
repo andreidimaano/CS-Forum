@@ -1,12 +1,14 @@
 import { Center, Box, Button, Link } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import { Link as ReactLink } from "react-router-dom";
 import { InputField } from "../utils/InputField";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
+import { AuthContext } from "../context/auth";
 
-function Signup() {
+function Signup(props) {
+  const context = useContext(AuthContext);
   const [createUser] = useMutation(CREATE_USER, {
     errorPolicy: "all",
   });
@@ -36,6 +38,10 @@ function Signup() {
             if (response.errors[0].extensions.errors) {
               setErrors(response.errors[0].extensions.errors);
             }
+          } else {
+            // Set the authentication cookie
+            context.login(response.data.createUser);
+            props.history.push("/");
           }
         }}
       >
@@ -70,7 +76,7 @@ function Signup() {
                 name="confirmPassword"
                 placeholder="confirmed password"
                 label="Confirmed Password"
-                type="confirmPassword"
+                type="password"
               />
             </Box>
             <Center>
