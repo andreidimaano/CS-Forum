@@ -13,18 +13,19 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link as ReactLink } from "react-router-dom";
 import Account from "./Account";
 import MobileNav from "./MobileNav";
 import NavbarLink from "./NavbarLink";
 import SignUpButtons from "./SignUpButtons";
+import { AuthContext } from "../context/auth";
 
 const Links = ["Feed", "Explore Topics", "Your Threads"];
 
 const NavbarSignUp = () => {
   const { isOpen, onToggle } = useDisclosure();
-  const [isLoggedIn, setIsLoggedin] = useState(true);
+  const { user } = useContext(AuthContext);
 
   return (
     <Box
@@ -82,7 +83,7 @@ const NavbarSignUp = () => {
             <NavbarLink route={"explore"} display={"Explore Topics"} />
           </HStack>
         </HStack>
-        {isLoggedIn ? <Account /> : <SignUpButtons />}
+        {user ? <Account /> : <SignUpButtons />}
       </Flex>
 
       {isOpen ? <MobileNav /> : null}

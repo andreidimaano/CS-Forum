@@ -33,11 +33,21 @@ export const UserResolvers = {
       }
 
       // Check if user already exists or not
-      const user = await User.findOne({ username });
-      if (user) {
+      const user1 = await User.findOne({ username });
+      if (user1) {
         throw new UserInputError("Username is already taken", {
           errors: {
             username: "This username is taken",
+          },
+        });
+      }
+
+      // Check if email has been usen or not
+      const user2 = await User.findOne({ email });
+      if (user2) {
+        throw new UserInputError("Email is already taken", {
+          errors: {
+            email: "This email is taken",
           },
         });
       }
@@ -82,14 +92,14 @@ export const UserResolvers = {
       // Check if username exists
       const user = await User.findOne({ username });
       if (!user) {
-        errors.general = "User not found";
+        errors.username = "User not found";
         throw new UserInputError("User not found", { errors });
       }
 
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
-        errors.general = "Wrong credentials";
-        throw new UserInputError("Wrong credentials", { errors });
+        errors.password = "Wrong password";
+        throw new UserInputError("Wrong password", { errors });
       }
 
       // Authentication token

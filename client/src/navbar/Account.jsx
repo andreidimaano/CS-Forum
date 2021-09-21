@@ -12,8 +12,11 @@ import {
 import { Link as ReactLink } from "react-router-dom";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
 import { CgProfile } from "react-icons/cg";
+import { AuthContext } from "../context/auth";
+import { useContext } from "react";
 
 const Account = () => {
+  const { logout } = useContext(AuthContext);
   return (
     <Flex alignItems={"center"}>
       <Menu>
@@ -40,7 +43,7 @@ const Account = () => {
           <MenuDivider />
           <Link
             as={ReactLink}
-            to={`/signout`}
+            onClick={logout}
             _hover={{
               textDecoration: "none",
             }}
