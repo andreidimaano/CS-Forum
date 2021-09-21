@@ -28,14 +28,14 @@ const Feed = ({}) => {
 
   return (
     <Grid minH={'calc(100vh - 57px)'} templateColumns="1fr minmax(200px, 600px) 1fr">
-      <Box w="100%" h="3000px" bg="blue.500">  
+      <Box w="100%" h="3000px">  
       </Box>
-      <VStack spacing="0px" w="100%" h="3000px">
+      <VStack mt={'1rem'} spacing="0px" w="100%" h="3000px">
         {data.getPosts.map(post => (
-          <FeedPost post={post} />
+          <FeedPost post={post}/>
         ))} 
       </VStack>
-      <Box w="100%" h="3000px" bg="blue.500" />
+      <Box w="100%" h="3000px"/>
     </Grid>
   )
 }
