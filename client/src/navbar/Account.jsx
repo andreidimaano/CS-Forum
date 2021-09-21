@@ -11,9 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
-import {CgProfile} from 'react-icons/cg'
-
-
+import { CgProfile } from "react-icons/cg";
 
 const Account = () => {
   return (
@@ -26,12 +24,7 @@ const Account = () => {
           cursor={"pointer"}
           minW={0}
         >
-          <Avatar
-            size={"sm"}
-            src={
-              <CgProfile />
-            }
-          />
+          <Avatar size={"sm"} src={<CgProfile />} />
         </MenuButton>
         <MenuList>
           <Link
@@ -43,7 +36,7 @@ const Account = () => {
           >
             <MenuItem>Your Profile</MenuItem>
           </Link>
-          <ColorModeSwitcher p={0}/>
+          <ColorModeSwitcher p={0} />
           <MenuDivider />
           <Link
             as={ReactLink}

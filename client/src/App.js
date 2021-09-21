@@ -25,8 +25,12 @@ function App() {
         <Box height="100vh">
           <NavbarSignUp />
           <Switch>
-            <Route path="/"><Feed/></Route>
-            <Route path="/feed"><Feed/></Route>
+            <Route path="/">
+              <Feed />
+            </Route>
+            <Route path="/feed">
+              <Feed />
+            </Route>
             <Route path="/explore"></Route>
             <Route path="/threads"></Route>
             <Route path="/login"></Route>
