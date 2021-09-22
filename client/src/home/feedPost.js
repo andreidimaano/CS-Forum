@@ -1,32 +1,89 @@
-import { useState } from "react";
-import { Grid, GridItem, Box, Image} from "@chakra-ui/react"
-import { Flex, Spacer } from "@chakra-ui/react"
-import { Stack, useColorModeValue, HStack, VStack, Button } from "@chakra-ui/react"
-import { gql, useQuery } from '@apollo/client';
-import { Text } from "@chakra-ui/react"
+import { useState, useEffect } from "react";
+import { Grid, GridItem, Box, Image } from "@chakra-ui/react";
+import { Flex, Spacer } from "@chakra-ui/react";
+import {
+  Stack,
+  useColorModeValue,
+  HStack,
+  VStack,
+  Button,
+} from "@chakra-ui/react";
+import { gql, useQuery } from "@apollo/client";
+import { Text } from "@chakra-ui/react";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { AiOutlineComment } from "react-icons/ai";
+import moment from "moment";
 
-const FeedPost = ({post}) => {
+const FeedPost = ({ post, user }) => {
+  console.log("post");
+  console.log(post);
+  const [likedPost, setLikedPost] = useState(false);
+  const [likeCounter, setLikeCounter] = useState(post.likes.length)
+
+  useEffect(() => {
+    let isLiked = false;
+    post.likes.forEach((like) => {
+      if (like === user) {
+        isLiked = true;
+      }
+    });
+
+    setLikedPost(isLiked);
+  }, [post, user]);
+
+  const heartButton = () => {
+    if(likedPost) {
+      setLikeCounter(likeCounter - 1)
+      setLikedPost(false)
+    } else {
+      setLikeCounter(likeCounter + 1)
+      setLikedPost(true)
+    }
+  }
+
   return (
-    <Flex 
+    <Flex
       direction="column"
-      borderBottom={1}
+      border={1}
       borderStyle={"solid"}
       py={"8px"}
       borderColor={useColorModeValue("gray.200", "gray.600")}
-      p={4} w="100%"
+      p={4}
+      w="100%"
+      mb={"1rem"}
     >
-    <HStack mb="8px" spacing="6px">
-      <Text fontWeight="bold" fontSize="md">@{post.username}</Text>
-      <Text fontSize="md">·</Text>
-      <Text fontSize="md">{post.createdAt}</Text>
-    </HStack>
-    <Text mb="8px" fontSize="md">{post.body}</Text>
-    <HStack spacing="16px">
-      <Button size="xs">Like</Button>
-      <Button size="xs">Comment</Button>
-    </HStack>
-  </Flex>
-  )
-}
+      <HStack mb="8px" spacing="6px">
+        <Text fontWeight="bold" fontSize="md">
+          @{post.username}
+        </Text>
+        <Text fontSize="md">·</Text>
+        <Text fontSize="md">
+          {moment(new Date(post.createdAt)).startOf("day").fromNow()}
+        </Text>
+      </HStack>
+      <Text mb="8px" fontSize="md">
+        {post.body}
+      </Text>
+      <HStack spacing="16px">
+        <Flex>
+          <Button size="xs" onClick={heartButton}>
+            {likedPost ? (
+              <BsHeartFill size="1.15em" color="red" />
+            ) : (
+              <BsHeart size="1.15em" />
+            )}
+          </Button>
+          <Text ml={"0.35rem"}>{likeCounter}</Text>
+        </Flex>
+        <Flex>
+          <Button size="xs">
+            <AiOutlineComment size="1.5em" />
+          </Button>
+          <Text ml={"0.35rem"}>{post.comments.length}</Text>
+        </Flex>
+      </HStack>
+    </Flex>
+  );
+};
 
-export default FeedPost
+export default FeedPost;
